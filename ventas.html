@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Sistema POS</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f4f4f4;
+}
+
+.container{
+width:800px;
+margin:auto;
+background:white;
+padding:20px;
+border-radius:10px;
+}
+
+input{
+padding:10px;
+margin:5px;
+}
+
+button{
+padding:10px;
+background:blue;
+color:white;
+border:none;
+cursor:pointer;
+}
+
+table{
+width:100%;
+margin-top:20px;
+border-collapse:collapse;
+}
+
+td,th{
+border:1px solid gray;
+padding:8px;
+text-align:center;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Venta</h2>
+
+<input id="codigo" placeholder="Codigo producto">
+
+<input id="cantidad" value="1">
+
+<button onclick="buscar()">Agregar</button>
+
+<table id="tabla">
+
+<tr>
+<th>Producto</th>
+<th>Precio</th>
+<th>Cantidad</th>
+<th>Subtotal</th>
+</tr>
+
+</table>
+
+<h3>Total: $ <span id="total">0</span></h3>
+
+<input id="pago" placeholder="Pago cliente">
+
+<button onclick="calcular()">Calcular cambio</button>
+
+<h3>Cambio: $ <span id="cambio">0</span></h3>
+
+<button onclick="guardarVenta()">Finalizar venta</button>
+
+</div>
+
+<script type="module">
+
+import { db, collection, addDoc, getDocs, query, where, doc, updateDoc } from "./firebase.js"
+
+let carrito=[]
+let total=0
+
+async function buscar(){
+
+let codigo = document.getElementById("codigo").value
+let cantidad = parseInt(document.getElementById("cantidad").value)
+
+const q = query(
+collection(db,"productos"),
+where("codigo","==",codigo)
+)
+
+const datos = await getDocs(q)
+
+datos.forEach(async (documento)=>{
+
+let p = documento.data()
+
+if(p.stock < cantidad){
+
+alert("No hay suficiente stock")
+return
+
+}
+
+let subtotal = p.precio * cantidad
+
+carrito.push({
+nombre:p.nombre,
+precio:p.precio,
+cantidad:cantidad,
+subtotal:subtotal
+})
+
+let tabla = document.getElementById("tabla")
+
+let fila = tabla.insertRow()
+
+fila.insertCell(0).innerText=p.nombre
+fila.insertCell(1).innerText=p.precio
+fila.insertCell(2).innerText=cantidad
+fila.insertCell(3).innerText=subtotal
+
+total += subtotal
+
+document.getElementById("total").innerText=total
+
+let nuevoStock = p.stock - cantidad
+
+await updateDoc(doc(db,"productos",documento.id),{
+
+stock:nuevoStock
+
+})
+
+})
+
+}
+
+function calcular(){
+
+let pago = parseFloat(document.getElementById("pago").value)
+
+let cambio = pago - total
+
+document.getElementById("cambio").innerText=cambio
+
+}
+
+async function guardarVenta(){
+
+await addDoc(collection(db,"ventas"),{
+
+productos:carrito,
+total:total,
+fecha:new Date()
+
+})
+
+alert("Venta guardada")
+
+location.reload()
+
+}
+
+window.buscar = buscar
+window.calcular = calcular
+window.guardarVenta = guardarVenta
+
+</script>
+
+</body>
+</html>
