@@ -20,6 +20,11 @@ const firebaseConfig = {
   appId: "1:548670226909:web:7a3c82fe4d923572f67634"
 };
 
+function irProductos(){
+window.location.href = "productos.html"
+}
+window.irProductos = irProductos
+
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
