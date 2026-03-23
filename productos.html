@@ -79,7 +79,15 @@ stock:stock
 
 })
 
-document.getElementById("mensaje").innerText="Producto guardado"
+let mensaje = document.getElementById("mensaje")
+
+mensaje.innerText = "Producto guardado correctamente"
+
+setTimeout(function(){
+
+mensaje.innerText = ""
+
+},5000)
 
 }
 
