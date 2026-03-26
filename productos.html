@@ -45,7 +45,7 @@ cursor:pointer;
 
 <h2>Registrar Producto</h2>
 
-<input id="codigo" placeholder="Codigo producto">
+<input id="codigo" placeholder="Codigo producto" onkeypress="detectarEnter(event)">
 
 <input id="nombre" placeholder="Nombre producto">
 
@@ -63,6 +63,49 @@ cursor:pointer;
 
 import { db, collection, addDoc } from "./firebase.js"
 
+function detectarEnter(event){
+
+if(event.key === "Enter"){
+
+buscarProducto()
+
+}
+
+}
+
+window.detectarEnter = detectarEnter
+
+async function buscarProducto(){
+
+let codigo = document.getElementById("codigo").value
+
+const q = query(
+collection(db,"productos"),
+where("codigo","==",codigo)
+)
+
+const datos = await getDocs(q)
+
+if(datos.empty){
+
+alert("Producto no encontrado")
+return
+
+}
+
+datos.forEach((documento)=>{
+
+let p = documento.data()
+
+document.getElementById("nombre").value = p.nombre
+document.getElementById("precio").value = p.precio
+document.getElementById("stock").value = p.stock
+
+productoID = documento.id
+
+})
+
+}
 async function guardar(){
 
 let codigo = document.getElementById("codigo").value
