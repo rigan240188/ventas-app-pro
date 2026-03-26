@@ -69,6 +69,13 @@ import { db, collection, getDocs, query, where, doc, updateDoc } from "./firebas
 
 async function actualizar(){
 
+if(productoID === null){
+
+alert("Primero busca un producto")
+return
+
+}
+
 let codigo = document.getElementById("codigo").value
 let nombre = document.getElementById("nombre").value
 let precio = parseFloat(document.getElementById("precio").value)
@@ -101,6 +108,8 @@ buscarProducto()
 
 window.detectarEnter = detectarEnter
 
+let productoID = null
+
 async function buscarProducto(){
 
 let codigo = document.getElementById("codigo").value
@@ -132,6 +141,9 @@ productoID = documento.id
 })
 
 }
+
+window.buscarProducto = buscarProducto
+
 async function guardar(){
 
 let codigo = document.getElementById("codigo").value
