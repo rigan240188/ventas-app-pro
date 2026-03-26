@@ -23,6 +23,10 @@ const firebaseConfig = {
 function irProductos(){
 window.location.href = "productos.html"
 }
+function irVentas(){
+window.location.href = "ventas.html"
+}
+window.irVentas = irVentas
 window.irProductos = irProductos
 
 const app = initializeApp(firebaseConfig);
