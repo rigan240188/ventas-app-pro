@@ -8,50 +8,89 @@
 /* BODY */
 body {
   font-family: Arial, sans-serif;
-  background: #f4f6f8;
-  padding: 20px;
+  background: linear-gradient(135deg, #f4f6f8, #e3e9ef);
   color: #333;
+
+  display: flex;
+  justify-content: center;   /* centra horizontal */
+  align-items: center;       /* centra vertical */
+  height: 100vh;
+}
+
+/* CONTENEDOR LOGIN / FORMULARIOS */
+.form, .form-container {
+  background: #ffffff;
+  width: 350px;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+  text-align: center;
 }
 
 /* TITULOS */
 h1, h2 {
-  margin-bottom: 15px;
-}
-
-/* FORMULARIOS */
-.form, .form-container {
-  background: #ffffff;
-  width: 40%;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   margin-bottom: 20px;
+  color: #333;
 }
 
 /* INPUTS */
 input {
-  display: block;
-  width: 40%;
-  margin: 8px 0;
-  padding: 10px;
-  border-radius: 5px;
+  width: 100%;
+  margin: 10px 0;
+  padding: 12px;
+  border-radius: 6px;
   border: 1px solid #ccc;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+input:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 4px rgba(0,123,255,0.4);
 }
 
 /* BOTONES */
 button {
-  padding: 10px 15px;
-  margin-top: 10px;
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
   background: #007bff;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
+  font-size: 15px;
   cursor: pointer;
   transition: 0.3s;
 }
 
 button:hover {
   background: #0056b3;
+}
+
+/* BOTÓN LOGOUT */
+button.logout {
+  background: #dc3545;
+}
+
+button.logout:hover {
+  background: #a71d2a;
+}
+
+/* LINKS */
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* TEXTO DE REGISTRO */
+p {
+  margin-top: 15px;
+  font-size: 14px;
 }
 
 /* LISTA DE VENTAS */
@@ -73,34 +112,4 @@ li {
   font-size: 18px;
   font-weight: bold;
   color: #28a745;
-}
-
-/* LINKS */
-a {
-  color: #007bff;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-/* CONTENEDOR CENTRADO (LOGIN / REGISTER) */
-body > h2,
-body > input,
-body > button,
-body > p {
-  max-width: 400px;
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-}
-
-/* BOTÓN LOGOUT */
-button.logout {
-  background: #dc3545;
-}
-
-button.logout:hover {
-  background: #a71d2a;
 }
