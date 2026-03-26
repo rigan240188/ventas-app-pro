@@ -45,6 +45,8 @@ cursor:pointer;
 
 <h2>Registrar Producto</h2>
 
+<button onclick="actualizar()">Actualizar producto</button>
+
 <input id="codigo" placeholder="Codigo producto" onkeypress="detectarEnter(event)">
 
 <input id="nombre" placeholder="Nombre producto">
@@ -62,6 +64,28 @@ cursor:pointer;
 <script type="module">
 
 import { db, collection, addDoc } from "./firebase.js"
+
+async function actualizar(){
+
+let codigo = document.getElementById("codigo").value
+let nombre = document.getElementById("nombre").value
+let precio = parseFloat(document.getElementById("precio").value)
+let stock = parseInt(document.getElementById("stock").value)
+
+await updateDoc(doc(db,"productos",productoID),{
+
+codigo:codigo,
+nombre:nombre,
+precio:precio,
+stock:stock
+
+})
+
+alert("Producto actualizado")
+
+}
+
+window.actualizar = actualizar
 
 function detectarEnter(event){
 
